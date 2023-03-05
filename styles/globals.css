@@ -1,0 +1,12 @@
+@import "antd/dist/reset.css";
+
+:root {
+    --primary-color: #4460f1;
+    --white-color: #ffffff;
+
+    --light-text-color: #9398b3;
+    --light-bg-color: #f2f4ff;
+    --dark-color: #333333;
+
+    --background-color: #fcfcff;
+}
