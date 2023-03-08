@@ -1,0 +1,14 @@
+.title {
+    padding: 16px 0;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.subTitle {
+    margin-left: 5px;
+    font-size: 5px;
+}
+
+.register {
+    color: #4460f1;
+}

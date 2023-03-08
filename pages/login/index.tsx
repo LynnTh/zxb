@@ -6,6 +6,7 @@ import { token_key } from "@/utils/storage";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import styles from "./index.module.css";
 import { createHeaderRoute } from "next/dist/server/server-route-utils";
+import LoginForm from "@/components/loginForm";
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
@@ -36,48 +37,7 @@ const LoginPage: React.FC = () => {
               <p>参赛人：庄鑫 陶巍</p>
             </div>
             <div className={styles.main}>
-              <Form
-                name="login"
-                onFinish={handleSubmit}
-                autoComplete="off"
-                layout="vertical"
-                size="large"
-              >
-                <Form.Item
-                  name="username"
-                  rules={[{ required: true, message: "用户名不能为空" }]}
-                >
-                  <Input
-                    placeholder={"请输入用户名"}
-                    style={{ margin: "8px 0" }}
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  name="password"
-                  rules={[{ required: true, message: "密码不能为空" }]}
-                >
-                  <Input.Password
-                    placeholder={"请输入密码"}
-                    style={{ margin: "8px 0" }}
-                  />
-                </Form.Item>
-
-                <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={loginLoading}
-                    style={{
-                      width: "100%",
-                      fontSize: "13px",
-                      margin: "12px 0",
-                    }}
-                  >
-                    登录
-                  </Button>
-                </Form.Item>
-              </Form>
+              <LoginForm loading={loginLoading} handleLogin={handleSubmit} />
             </div>
           </div>
         </div>

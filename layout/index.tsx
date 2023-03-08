@@ -1,53 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
+import { Button, Layout, Menu, theme } from "antd";
 import styles from "./index.module.css";
-import { useRouter } from "next/router";
-import { removeToken } from "@/utils/storage";
-import Link from "next/link";
-import { FileOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Menu, MenuProps } from "antd";
+import logout from "@/utils/logout";
+
+const { Header, Sider, Content } = Layout;
 
 interface Props {
   children: React.ReactNode;
 }
 
-const items: MenuProps["items"] = [
-  {
-    label: "用户管理",
-    key: "user",
-    icon: <UserOutlined />,
-  },
-  {
-    label: "文件管理",
-    key: "file",
-    icon: <FileOutlined />,
-  },
-];
-
 const MainLayout: React.FC<Props> = ({ children }: Props) => {
-  const router = useRouter();
-
-  const handleLogout = () => {
-    removeToken();
-    router.push("/login");
-  };
+  const [collapsed, setCollapsed] = useState(false);
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
 
   return (
-    <div className={styles.layout}>
-      <div className={styles.topbar}>
-        <div className={styles.container}>
-          <div className={styles.title}>振兴杯</div>
-          <div className={styles.list}>
-            <Menu mode="horizontal" items={items} />
-          </div>
-          <div className={styles.logout}>
-            <Button type="text" icon={<LogoutOutlined />}>
-              登出
-            </Button>
-          </div>
-        </div>
-      </div>
-      <div className={styles.content}>{children}</div>
-    </div>
+    <Layout style={{ height: "100vh" }}>
+      <Sider trigger={null} collapsible collapsed={collapsed}>
+        <div className={styles.logo}>系统title</div>
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={["1"]}
+          items={[
+            {
+              key: "1",
+              icon: <UserOutlined />,
+              label: "nav 1",
+            },
+            {
+              key: "2",
+              icon: <VideoCameraOutlined />,
+              label: "nav 2",
+            },
+            {
+              key: "3",
+              icon: <UploadOutlined />,
+              label: "nav 3",
+            },
+          ]}
+        />
+      </Sider>
+      <Layout className="site-layout">
+        <Header style={{ padding: 0, background: colorBgContainer }}>
+          <>
+            <span
+              className={styles.trigger}
+              onClick={() => setCollapsed(!collapsed)}
+            >
+              {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            </span>
+            <span className={styles.logout}>
+              <Button
+                type="dashed"
+                icon={<LogoutOutlined />}
+                onClick={() => logout()}
+              >
+                登出
+              </Button>
+            </span>
+          </>
+        </Header>
+        <Content
+          style={{
+            margin: "24px 16px",
+            padding: 24,
+            minHeight: 280,
+            background: colorBgContainer,
+          }}
+        >
+          {children}
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 
